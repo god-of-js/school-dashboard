@@ -4,13 +4,14 @@ import UiButton from '../../components/ui/UiButton';
 import UiForm from '../../components/ui/UiForm';
 import UiInput from '../../components/ui/UiInput';
 import OnChangeParams from '../../types/OnChangeParams';
+import RegistrationSchema from '../../utils/schemas/RegistrationSchema';
 
 export default function RegistrationPage() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     name: '',
-    cpassword: ''
+    cPassword: ''
   });
   function onChange({ name, value }: OnChangeParams) {
     setFormData((currentValue) => ({
@@ -20,10 +21,11 @@ export default function RegistrationPage() {
   }
 
   function registerUser() {}
+
   return (
     <>
       <h1 className="my-14 font-bold text-lg">Nice to e-meet you!</h1>
-      <UiForm formData={formData} onSubmit={registerUser}>
+      <UiForm formData={formData} schema={RegistrationSchema} onSubmit={registerUser}>
         {({ errors }) => (
           <div className="grid gap-8">
             <UiInput
@@ -48,21 +50,15 @@ export default function RegistrationPage() {
               value={formData.password}
               name="password"
               type="password"
-              onChange={onChange}
-            />
-            <UiInput
-              placeholder="Enter your Password"
-              label="ConfirmPassword"
-              value={formData.password}
-              name="password"
-              type="password"
+              error={errors.password}
               onChange={onChange}
             />
             <UiInput
               placeholder="Confirm your Password"
               label="Confirm Password"
-              value={formData.cpassword}
-              name="cpassword"
+              value={formData.cPassword}
+              error={errors.cPassword}
+              name="cPassword"
               type="password"
               onChange={onChange}
             />
