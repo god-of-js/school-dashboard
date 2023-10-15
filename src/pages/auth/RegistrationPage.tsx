@@ -9,7 +9,8 @@ export default function RegistrationPage() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    name: ''
+    name: '',
+    cpassword: ''
   });
   function onChange({ name, value }: OnChangeParams) {
     setFormData((currentValue) => ({
@@ -46,6 +47,22 @@ export default function RegistrationPage() {
               label="Password"
               value={formData.password}
               name="password"
+              type="password"
+              onChange={onChange}
+            />
+            <UiInput
+              placeholder="Enter your Password"
+              label="ConfirmPassword"
+              value={formData.password}
+              name="password"
+              type="password"
+              onChange={onChange}
+            />
+            <UiInput
+              placeholder="Confirm your Password"
+              label="Confirm Password"
+              value={formData.cpassword}
+              name="cpassword"
               type="password"
               onChange={onChange}
             />

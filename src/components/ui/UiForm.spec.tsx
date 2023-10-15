@@ -9,30 +9,31 @@ const defaultData = {
   name: '',
   email: '',
   password: '',
-  handleSubmit: () => {}
+  cPassword: '',
 }
 const filledData = {
   name: 'Henry Eze',
   email: 'henryeze019@gmail.com',
-  password: 'it don\'t matter to me,'
+  password: 'it don\'t matter to me',
+  cPassword: 'it don\'t matter to me',
 }
 
 describe('src/components/ui/UiButton.tsx', () => {
-    let formData = defaultData;
     let formErrors: FormikErrors<Record<string, string>> = {}
 
     function setFormErrors(errors: FormikErrors<Record<string, string>>) {
       formErrors = errors;
     }
 
-    const spy = vi.spyOn(formData, 'handleSubmit');
     beforeEach(() => {
       formErrors = {}
     });
-
-  it('Form sends errors when needed.', async () => {
+    
+    it('Form sends errors when needed.', async () => {
+    
+    let handleSubmit = vi.fn()
     const formComponent = render(
-      <UiForm formData={formData} schema={RegistrationSchema} onSubmit={formData.handleSubmit}>{({ errors }) => {
+      <UiForm formData={defaultData} schema={RegistrationSchema} onSubmit={handleSubmit}>{({ errors }) => {
         setFormErrors(errors);
         return <></>
       }}</UiForm>,
@@ -47,15 +48,17 @@ describe('src/components/ui/UiButton.tsx', () => {
         name: 'This field is required',
         email: 'This field is required',
         password: 'password must be at least 8 characters',
+        "cPassword": "Confirm Password is required"
       });
-      expect(spy).not.toHaveBeenCalled();
+      expect(handleSubmit).not.toHaveBeenCalled();
     });
     formComponent.unmount();
   });
 
   it('Form sends errors when needed.', async () => {
+    let handleSubmit = vi.fn()
     const formComponent = render(
-      <UiForm formData={filledData} schema={RegistrationSchema} onSubmit={formData.handleSubmit}>{({ errors }) => {
+      <UiForm formData={filledData} schema={RegistrationSchema} onSubmit={handleSubmit}>{({ errors }) => {
         setFormErrors(errors);
         return <></>
       }}</UiForm>,
@@ -70,8 +73,9 @@ describe('src/components/ui/UiButton.tsx', () => {
         name: 'This field is required',
         email: 'This field is required',
         password: 'password must be at least 8 characters',
+        "cPassword": "Confirm Password is required"
       });
-      expect(spy).toHaveBeenCalled();
+      expect(handleSubmit).toHaveBeenCalled();
     });
     formComponent.unmount();
   });
