@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useRegisterQuery } from '../../api/queries';
+import { useRecordUser, useRegisterQuery } from '../../api/queries';
 import UiButton from '../../components/ui/UiButton';
 import UiForm from '../../components/ui/UiForm';
 import UiInput from '../../components/ui/UiInput';
@@ -8,13 +8,14 @@ import OnChangeParams from '../../types/OnChangeParams';
 import RegistrationSchema from '../../utils/schemas/RegistrationSchema';
 
 export default function RegistrationPage() {
+  const { request: registerUserRequest, isLoading: registerUserIsLoading } = useRegisterQuery()
+  const { request: recordUserRequest, isLoading: recordUserIsLoading } = useRecordUser()
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     name: '',
     cPassword: '',
   });
-  const { request } = useRegisterQuery(formData.email, formData.password)
   function onChange({ name, value }: OnChangeParams) {
     setFormData((currentValue) => ({
       ...currentValue,
@@ -24,8 +25,18 @@ export default function RegistrationPage() {
 
   async function registerUser() {
     try {
-      const req = await request();
-      console.log(req);
+      const req = await registerUserRequest({email: formData.email, password: formData.password}) as {uid: string};
+      const userData = {
+        _id: req.uid,
+        name: formData.name,
+        email: formData.email
+      }
+      recordUserRequest(userData).then((e) => {
+        console.log({
+          e,
+          userData
+        })
+      })
     } catch (e) {
       console.log(e)
     }
@@ -75,7 +86,7 @@ export default function RegistrationPage() {
               type="password"
               onChange={onChange}
             />
-            <UiButton block>Submit</UiButton>
+            <UiButton block loading={registerUserIsLoading || recordUserIsLoading}>Submit</UiButton>
             <p className="text-sm text-center">
               Already a member?{' '}
               <Link to="/auth/login" className="text-primary underline">

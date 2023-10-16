@@ -17,8 +17,8 @@ import {
 import db, { auth } from './firebase';
 
 class ApiService {
-  createUserWithEmailAndPassword(email: string, password: string) {
-    return createUserWithEmailAndPassword(auth, email, password).then(
+  createUserWithEmailAndPassword(data: {email: string, password: string}) {
+    return createUserWithEmailAndPassword(auth, data.email, data.password).then(
       ({ user }) => user,
     );
   }
@@ -36,7 +36,7 @@ class ApiService {
   getUser(id: string) {
     return this.getItem<User>('user', id);
   }
-  private setDoc(
+  private async setDoc(
     collectionName: string,
     id: string,
     data: unknown,

@@ -1,14 +1,20 @@
+import UiLoader from "./UiLoader";
+
 interface Props {
   children: React.ReactNode;
   variant?: 'primary';
   block?: boolean;
   disabled?: boolean;
+  loading?: boolean;
+  type?: 'button' | 'submit',
   onClick?: () => void;
 }
 export default function UiButton({
   children,
   variant,
   disabled,
+  loading,
+  type = 'submit',
   block,
   onClick,
 }: Props) {
@@ -18,10 +24,11 @@ export default function UiButton({
         block && 'w-full'
       }`}
       disabled={disabled}
+      type={type}
       data-testid="ui-button"
       onClick={onClick}
     >
-      {children}
+      {loading? <UiLoader /> :children}
     </button>
   );
 }

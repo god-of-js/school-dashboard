@@ -1,17 +1,21 @@
 import { useMutation } from "@tanstack/react-query";
 import api from ".";
+import User from "../types/User";
 
-export function useRegisterQuery(email: string, password: string) {
-    console.log(email, password);
-    return mutationWrapper(api.createUserWithEmailAndPassword(email, password))
+export function useRegisterQuery() {
+    return mutationWrapper<{email: string, password: string}>(api.createUserWithEmailAndPassword)
 }
 
-function mutationWrapper(requestFn: Promise<unknown>) {
-    const mutation = useMutation(() => requestFn);
+export function useRecordUser() {
+    return mutationWrapper<User>(api.recordAccountDetails) // how it's called
+}
 
-    const requestRun = async () => {
+function mutationWrapper<T = Record<string, string>>(requestFn: (param: T) => Promise<unknown>) {
+    const mutation = useMutation((data: T) => requestFn(data));
+
+    const requestRun = (data: T) => {
         try {
-            await mutation.mutateAsync();
+            return mutation.mutateAsync(data);
         } catch (e) {
             console.error("Mutation failed:", e);
             throw new Error("Mutation failed");
