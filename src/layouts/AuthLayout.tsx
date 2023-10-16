@@ -12,8 +12,8 @@ export default function AuthLayout() {
       </div>
       <div className="max-w-lg mx-auto md:w-3/6 px-16 py-12">
         <div className="flex items-center mb-12 gap-2">
-          <img src={AppLogo} alt="school logo" />
-          <span className="text-lg text-gray-500 font-bold">School</span>
+          <img src={AppLogo} width="500" alt="school logo" />
+          <span className="text-lg text-gray-900 font-bold">School</span>
         </div>
         <Outlet />
       </div>
