@@ -1,4 +1,9 @@
-import { useMutation } from '@tanstack/react-query';
+import {
+  QueryFunction,
+  QueryKey,
+  useMutation,
+  useQuery,
+} from '@tanstack/react-query';
 import api from '.';
 import AuthDetails from '../types/AuthDetails';
 import User from '../types/User';
@@ -13,6 +18,10 @@ export function useRecordUserQuery() {
 
 export function useLoginUserQuery() {
   return mutationWrapper<AuthDetails>(api.signInWithEmailAndPassword); // why does this not work here
+}
+
+export function useGetUserProfile(userId: string) {
+  return useQuery(['userDetails', userId], () => api.getUser(userId));
 }
 
 function mutationWrapper<

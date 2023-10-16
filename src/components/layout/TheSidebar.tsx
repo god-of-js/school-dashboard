@@ -5,7 +5,8 @@ import {
   Books,
   GearSix,
   Database,
-  BookBookmark
+  BookBookmark,
+  SignOut,
 } from '@phosphor-icons/react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -22,46 +23,52 @@ export default function TheSidebar() {
     {
       path: '/tasks',
       name: 'Tasks',
-      icon: <ListBullets size={20}  />,
+      icon: <ListBullets size={20} />,
     },
     {
       path: '/courses',
       name: 'Courses',
-      icon: <BookBookmark size={20}  />,
+      icon: <BookBookmark size={20} />,
     },
     {
       path: '/score',
       name: 'Score',
-      icon: <BookOpen size={20}  />,
+      icon: <BookOpen size={20} />,
     },
     {
       path: '/library',
       name: 'Library',
-      icon: <Books size={20}  />,
+      icon: <Books size={20} />,
     },
     {
       path: '/database',
-      name: 'Datebase',
-      icon: <Database size={20}  />,
+      name: 'Database',
+      icon: <Database size={20} />,
     },
     {
       path: '/settings',
       name: 'Settings',
-      icon: <GearSix size={20}  />,
+      icon: <GearSix size={20} />,
     },
   ];
 
   const activeRoute = router.pathname;
+
+  function logUserOut() {
+    localStorage.removeItem('uid');
+    window.location.reload();
+  }
+
   return (
-    <div className="hidden md:block h-screen border-r-4 border-gray-25 w-1/6">
+    <nav className="hidden relative md:block h-screen border-r-2 border-gray-25 w-1/6">
       <div className="flex items-center justify-center mb-16 gap-2 py-4">
         <img src={AppLogo} alt="school logo" />
         <span className="text-2xl text-gray-500 font-bold">School</span>
       </div>
 
-      <ul className="">
-        {routes.map((route) => (
-          <li className="h-12 p-0 flex items-start mt-1">
+      <ul>
+        {routes.map((route, index) => (
+          <li className="h-12 p-0 flex items-start mt-1" key={index}>
             <Link
               to={route.path}
               className={`w-full border-l-4  ${
@@ -70,14 +77,23 @@ export default function TheSidebar() {
                   : 'text-gray-900 text-sm border-transparent hover:text-primary hover:border-primary hover:bg-gray-10'
               }`}
             >
-            <div className="h-12 flex items-center gap-4 w-4/5 mx-auto">
-              {route.icon}
-              <span>{route.name}</span>
-            </div>
+              <div className="h-12 flex items-center gap-4 w-4/5 mx-auto">
+                {route.icon}
+                <span>{route.name}</span>
+              </div>
             </Link>
           </li>
         ))}
+        <li
+          className="h-12 p-0 cursor-pointer w-full mb-12 absolute bottom-0 flex border-l-4 text-gray-900 text-sm border-transparent hover:text-danger hover:border-danger hover:bg-danger-10 items-start mt-1"
+          onClick={logUserOut}
+        >
+          <div className="h-12 flex items-center gap-4 w-4/5 mx-auto">
+            <SignOut size={20} />
+            <span>Log out</span>
+          </div>
+        </li>
       </ul>
-    </div>
+    </nav>
   );
 }

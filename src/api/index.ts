@@ -31,12 +31,11 @@ class ApiService {
   }
 
   recordAccountDetails(data: User) {
-    console.log(this.setDoc);
     return this.setDoc('user', data._id, data);
   }
 
-  getUser(id: string) {
-    return this.getItem<User>('user', id);
+  getUser(userId: string) {
+    return this.getItem<User>('user', userId).then((user) => user);
   }
   private async setDoc(
     collectionName: string,

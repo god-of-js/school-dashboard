@@ -1,7 +1,10 @@
+import TheTopNav from '../../components/layout/TheTopNav';
+
 export default function DashboardPage() {
   return (
     <>
-      <h1 className="text-5xl text-center p-5">Work in progress</h1>
+      <TheTopNav />
+      <h1 className="text-xl text-center p-5">Work in progress</h1>
     </>
   );
 }

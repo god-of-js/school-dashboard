@@ -8,6 +8,7 @@ import AuthLayout from '../layouts/AuthLayout';
 import DashboardLayout from '../layouts/DashboardLayout';
 
 const DashboardPage = lazy(() => import('../pages/app/DashboardPage'));
+const TasksPage = lazy(() => import('../pages/app/TasksPage'));
 const RegistrationPage = lazy(() => import('../pages/auth/RegistrationPage'));
 const LoginPage = lazy(() => import('../pages/auth/LoginPage'));
 
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <DashboardPage />,
+      },
+      {
+        path: '/tasks',
+        element: <TasksPage />,
       },
     ],
   },

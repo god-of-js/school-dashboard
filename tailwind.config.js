@@ -7,6 +7,7 @@ export default {
     extend: {
       colors: {
         danger: "#EB5757",
+        "danger-10": "#EB575710",
         primary: "#007AFF",
         "danger-100": "#EB575710",
         "gray-10": "#F8F8F8",
