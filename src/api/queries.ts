@@ -7,7 +7,7 @@ export function useRegisterQuery() {
 }
 
 export function useRecordUser() {
-    return mutationWrapper<User>(api.recordAccountDetails) // how it's called
+    return mutationWrapper<User>(api.recordAccountDetails.bind(api)) // why does this not work here
 }
 
 function mutationWrapper<T = Record<string, string>>(requestFn: (param: T) => Promise<unknown>) {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useRecordUser, useRegisterQuery } from '../../api/queries';
 import UiButton from '../../components/ui/UiButton';
 import UiForm from '../../components/ui/UiForm';
@@ -8,6 +8,7 @@ import OnChangeParams from '../../types/OnChangeParams';
 import RegistrationSchema from '../../utils/schemas/RegistrationSchema';
 
 export default function RegistrationPage() {
+  const navigate = useNavigate();
   const { request: registerUserRequest, isLoading: registerUserIsLoading } = useRegisterQuery()
   const { request: recordUserRequest, isLoading: recordUserIsLoading } = useRecordUser()
   const [formData, setFormData] = useState({
@@ -31,11 +32,9 @@ export default function RegistrationPage() {
         name: formData.name,
         email: formData.email
       }
-      recordUserRequest(userData).then((e) => {
-        console.log({
-          e,
-          userData
-        })
+      recordUserRequest(userData).then(() => {
+        localStorage.setItem('uid', userData._id);
+        window.location.reload();
       })
     } catch (e) {
       console.log(e)

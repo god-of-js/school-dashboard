@@ -30,6 +30,7 @@ class ApiService {
   }
 
   recordAccountDetails(data: User) {
+    console.log(this.setDoc)
     return this.setDoc('user', data._id, data);
   }
 
@@ -82,14 +83,6 @@ class ApiService {
     } else {
       throw new Error('404: Document not found');
     }
-  }
-
-  private patch(url: string, data: unknown): unknown {
-    return { url, data };
-  }
-
-  private remove(url: string) {
-    return { url };
   }
 }
 

@@ -15,7 +15,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/auth',
-    element: <AuthLayout />,
+    element: <ProtectedRoute reRouteUrl="/" allowNavigation={!userIsLoggedIn()}><AuthLayout /></ProtectedRoute>,
     children: [
       {
         path: 'join',
