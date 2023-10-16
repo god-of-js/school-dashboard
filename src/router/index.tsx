@@ -3,13 +3,15 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import DashboardPage from '../pages/app/DashboardPage';
 import AuthLayout from '../layouts/AuthLayout';
+import { ProtectedRoute } from './ProtectedRoute';
+import { userIsLoggedIn } from './navigationGuards';
 
 const RegistrationPage = lazy(() => import('../pages/auth/RegistrationPage'));
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <DashboardPage />,
+    element: <ProtectedRoute reRouteUrl='/auth/join' allowNavigation={userIsLoggedIn()}><DashboardPage /></ProtectedRoute>,
   },
   {
     path: '/auth',
