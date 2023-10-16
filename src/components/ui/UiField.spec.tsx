@@ -6,7 +6,9 @@ import UiField from './UiField';
 describe('src/components/ui/UiField.tsx', () => {
   it('UiField renders error when error is passed', async () => {
     const fieldComponent = render(
-      <UiField label="test" error="error-text should be displayed">Test Field</UiField>,
+      <UiField label="test" error="error-text should be displayed">
+        Test Field
+      </UiField>,
     );
 
     const errorText = await fieldComponent.getByTestId('error-text');

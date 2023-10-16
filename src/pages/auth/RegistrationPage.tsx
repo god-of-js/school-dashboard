@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useRegisterQuery } from '../../api/queries';
 import UiButton from '../../components/ui/UiButton';
 import UiForm from '../../components/ui/UiForm';
 import UiInput from '../../components/ui/UiInput';
@@ -11,8 +12,9 @@ export default function RegistrationPage() {
     email: '',
     password: '',
     name: '',
-    cPassword: ''
+    cPassword: '',
   });
+  const { request } = useRegisterQuery(formData.email, formData.password)
   function onChange({ name, value }: OnChangeParams) {
     setFormData((currentValue) => ({
       ...currentValue,
@@ -20,12 +22,23 @@ export default function RegistrationPage() {
     }));
   }
 
-  function registerUser() {}
+  async function registerUser() {
+    try {
+      const req = await request();
+      console.log(req);
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   return (
     <>
       <h1 className="my-14 font-bold text-lg">Nice to e-meet you!</h1>
-      <UiForm formData={formData} schema={RegistrationSchema} onSubmit={registerUser}>
+      <UiForm
+        formData={formData}
+        schema={RegistrationSchema}
+        onSubmit={registerUser}
+      >
         {({ errors }) => (
           <div className="grid gap-8">
             <UiInput
