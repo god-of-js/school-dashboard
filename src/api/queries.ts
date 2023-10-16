@@ -1,21 +1,26 @@
 import { useMutation } from "@tanstack/react-query";
 import api from ".";
+import AuthDetails from "../types/AuthDetails";
 import User from "../types/User";
 
 export function useRegisterQuery() {
-    return mutationWrapper<{email: string, password: string}>(api.createUserWithEmailAndPassword)
+    return mutationWrapper<AuthDetails>(api.createUserWithEmailAndPassword)
 }
 
-export function useRecordUser() {
+export function useRecordUserQuery() {
     return mutationWrapper<User>(api.recordAccountDetails.bind(api)) // why does this not work here
 }
 
-function mutationWrapper<T = Record<string, string>>(requestFn: (param: T) => Promise<unknown>) {
+export function useLoginUserQuery() {
+    return mutationWrapper<AuthDetails>(api.signInWithEmailAndPassword) // why does this not work here
+}
+
+function mutationWrapper<T = Record<string, string>, R = Record<string, string>>(requestFn: (param: T) => Promise<unknown>) {
     const mutation = useMutation((data: T) => requestFn(data));
 
     const requestRun = (data: T) => {
         try {
-            return mutation.mutateAsync(data);
+            return mutation.mutateAsync(data) as Promise<R>;
         } catch (e) {
             console.error("Mutation failed:", e);
             throw new Error("Mutation failed");

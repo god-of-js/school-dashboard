@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useRecordUser, useRegisterQuery } from '../../api/queries';
+import { Link } from 'react-router-dom';
+import { useRecordUserQuery, useRegisterQuery } from '../../api/queries';
 import UiButton from '../../components/ui/UiButton';
 import UiForm from '../../components/ui/UiForm';
 import UiInput from '../../components/ui/UiInput';
@@ -8,9 +8,8 @@ import OnChangeParams from '../../types/OnChangeParams';
 import RegistrationSchema from '../../utils/schemas/RegistrationSchema';
 
 export default function RegistrationPage() {
-  const navigate = useNavigate();
   const { request: registerUserRequest, isLoading: registerUserIsLoading } = useRegisterQuery()
-  const { request: recordUserRequest, isLoading: recordUserIsLoading } = useRecordUser()
+  const { request: recordUserRequest, isLoading: recordUserIsLoading } = useRecordUserQuery()
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -26,9 +25,9 @@ export default function RegistrationPage() {
 
   async function registerUser() {
     try {
-      const req = await registerUserRequest({email: formData.email, password: formData.password}) as {uid: string};
+      const { uid } = await registerUserRequest({email: formData.email, password: formData.password}) as {uid: string};
       const userData = {
-        _id: req.uid,
+        _id: uid,
         name: formData.name,
         email: formData.email
       }

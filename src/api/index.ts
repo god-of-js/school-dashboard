@@ -15,16 +15,17 @@ import {
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 import db, { auth } from './firebase';
+import AuthDetails from '../types/AuthDetails';
 
 class ApiService {
-  createUserWithEmailAndPassword(data: {email: string, password: string}) {
+  createUserWithEmailAndPassword(data: AuthDetails) {
     return createUserWithEmailAndPassword(auth, data.email, data.password).then(
       ({ user }) => user,
     );
   }
 
-  signInWithEmailAndPassword(email: string, password: string) {
-    return signInWithEmailAndPassword(auth, email, password).then(
+  signInWithEmailAndPassword(data: AuthDetails) {
+    return signInWithEmailAndPassword(auth, data.email, data.password).then(
       ({ user }) => user,
     );
   }

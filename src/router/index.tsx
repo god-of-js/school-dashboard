@@ -7,11 +7,12 @@ import { ProtectedRoute } from './ProtectedRoute';
 import { userIsLoggedIn } from './navigationGuards';
 
 const RegistrationPage = lazy(() => import('../pages/auth/RegistrationPage'));
+const LoginPage = lazy(() => import('../pages/auth/LoginPage'));
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <ProtectedRoute reRouteUrl='/auth/join' allowNavigation={userIsLoggedIn()}><DashboardPage /></ProtectedRoute>,
+    element: <ProtectedRoute reRouteUrl='/auth/login' allowNavigation={userIsLoggedIn()}><DashboardPage /></ProtectedRoute>,
   },
   {
     path: '/auth',
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: 'join',
         element: <RegistrationPage />,
+      },
+      {
+        path: 'login',
+        element: <LoginPage />,
       },
     ],
   },
