@@ -1,10 +1,7 @@
 export default function DashboardPage() {
   return (
     <>
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quaerat
-      temporibus veniam ipsam optio ipsum modi iusto in velit aliquid
-      praesentium deleniti unde nesciunt et ex blanditiis tempore minima,
-      quibusdam architecto?
+      <h1 className="text-5xl text-center p-5">Work in progress</h1>
     </>
   );
 }

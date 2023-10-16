@@ -31,7 +31,7 @@ class ApiService {
   }
 
   recordAccountDetails(data: User) {
-    console.log(this.setDoc)
+    console.log(this.setDoc);
     return this.setDoc('user', data._id, data);
   }
 

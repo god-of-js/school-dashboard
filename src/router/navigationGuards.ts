@@ -1,3 +1,3 @@
 export function userIsLoggedIn() {
-    return !!localStorage.getItem('uid')
+  return !!localStorage.getItem('uid');
 }

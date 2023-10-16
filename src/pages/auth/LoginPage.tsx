@@ -8,7 +8,7 @@ import OnChangeParams from '../../types/OnChangeParams';
 import LoginSchema from '../../utils/schemas/LoginSchema';
 
 export default function LoginPage() {
-  const { request, isLoading } = useLoginUserQuery()
+  const { request, isLoading } = useLoginUserQuery();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -23,22 +23,18 @@ export default function LoginPage() {
   async function loginUser() {
     try {
       request(formData).then(({ uid }) => {
-        localStorage.setItem('uid', uid)
+        localStorage.setItem('uid', uid);
         window.location.reload();
       });
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   }
 
   return (
     <>
       <h1 className="my-14 font-bold text-lg">Welcome back! </h1>
-      <UiForm
-        formData={formData}
-        schema={LoginSchema}
-        onSubmit={loginUser}
-      >
+      <UiForm formData={formData} schema={LoginSchema} onSubmit={loginUser}>
         {({ errors }) => (
           <div className="grid gap-8">
             <UiInput
@@ -58,7 +54,9 @@ export default function LoginPage() {
               error={errors.password}
               onChange={onChange}
             />
-            <UiButton block loading={isLoading}>Submit</UiButton>
+            <UiButton block loading={isLoading}>
+              Submit
+            </UiButton>
             <p className="text-sm text-center">
               Not a member?{' '}
               <Link to="/auth/join" className="text-primary underline">

@@ -1,4 +1,4 @@
-import UiLoader from "./UiLoader";
+import UiLoader from './UiLoader';
 
 interface Props {
   children: React.ReactNode;
@@ -6,7 +6,7 @@ interface Props {
   block?: boolean;
   disabled?: boolean;
   loading?: boolean;
-  type?: 'button' | 'submit',
+  type?: 'button' | 'submit';
   onClick?: () => void;
 }
 export default function UiButton({
@@ -28,7 +28,7 @@ export default function UiButton({
       data-testid="ui-button"
       onClick={onClick}
     >
-      {loading? <UiLoader /> :children}
+      {loading ? <UiLoader /> : children}
     </button>
   );
 }

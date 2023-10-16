@@ -1,1 +1,4 @@
-export default interface AuthDetails {email: string, password: string}
+export default interface AuthDetails {
+  email: string;
+  password: string;
+}
