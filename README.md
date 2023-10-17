@@ -21,6 +21,7 @@ This applications provides a way for students to prioritize their schedules thro
 - Scheduling
 - Detail dashboard
 - Course registration.
+- Re-ordering tasks.
 
 ### Upcoming code features
 
