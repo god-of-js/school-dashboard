@@ -13,6 +13,7 @@ import {
 import UiModal from '../../components/ui/UiModal';
 import CreateTask from '../../components/tasks/CreateTask';
 import Task from '../../types/Task';
+import UiInput from '../../components/ui/UiInput';
 
 export default function TasksPage() {
   // TODO: fix issue with overflow
@@ -24,6 +25,7 @@ export default function TasksPage() {
   const { data: remoteTasks } = useGetTasksOfUserQuery(uid);
   const [createTaskIsVisible, setCreateTaskIsVisible] = useState(false);
   const [activeTaskGroupId, setActiveTaskGroupId] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const taskGroups = useMemo<TaskGroup[]>(
     () => [
@@ -34,8 +36,22 @@ export default function TasksPage() {
   );
 
   const tasks = useMemo<Task[]>(() => {
-    return [...localTasks, ...(remoteTasks?.length ? remoteTasks : [])];
-  }, [localTasks, remoteTasks]);
+    const unfilteredTasks = [...localTasks, ...(remoteTasks?.length ? remoteTasks : [])]
+
+    if (searchQuery) return searchTasks(unfilteredTasks);
+
+    return unfilteredTasks;
+  }, [localTasks, remoteTasks, searchQuery]);
+
+  function searchTasks(unfilteredTasks: Task[]): Task[]  {
+    if (!searchQuery) {
+      return unfilteredTasks; 
+    }
+  
+    return unfilteredTasks.filter((task) =>
+      task.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  };
 
   function filterTasksByGroupId(groupId: string) {
     return tasks.filter(({ taskGroupId }) => taskGroupId === groupId);
@@ -84,7 +100,12 @@ export default function TasksPage() {
 
   return (
     <div className="overflow-hidden">
-      <TheTopNav />
+      <TheTopNav>
+        <div className="w-60">
+
+        <UiInput value={searchQuery} name="searchQuery" placeholder='Search for tasks' onChange={({ value }) => setSearchQuery(value!)} />
+        </div>
+      </TheTopNav>
       <div className="p-4 flex gap-4 overflow-auto">
         {taskGroups.map((taskGroup, index) => (
           <Tasks
