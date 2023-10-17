@@ -16,6 +16,7 @@ import {
 } from 'firebase/auth';
 import db, { auth } from './firebase';
 import AuthDetails from '../types/AuthDetails';
+import TaskGroup from '../types/TaskGroup';
 
 class ApiService {
   createUserWithEmailAndPassword(data: AuthDetails) {
@@ -33,7 +34,19 @@ class ApiService {
   recordAccountDetails(data: User) {
     return this.setDoc('user', data._id, data);
   }
+  createTaskGroup(data: TaskGroup) {
+    return this.setDoc('task-group', data._id, data);
+  }
 
+  getTaskGroupsOfUser(userId: string) {
+    return this.query<TaskGroup>({
+      collectionName: 'task-group',
+      key: 'userId',
+      condition: '==',
+      value: userId
+    })
+  }
+ 
   getUser(userId: string) {
     return this.getItem<User>('user', userId).then((user) => user);
   }

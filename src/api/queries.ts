@@ -1,11 +1,7 @@
-import {
-  QueryFunction,
-  QueryKey,
-  useMutation,
-  useQuery,
-} from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import api from '.';
 import AuthDetails from '../types/AuthDetails';
+import TaskGroup from '../types/TaskGroup';
 import User from '../types/User';
 
 export function useRegisterQuery() {
@@ -13,11 +9,19 @@ export function useRegisterQuery() {
 }
 
 export function useRecordUserQuery() {
-  return mutationWrapper<User>(api.recordAccountDetails.bind(api)); // why does this not work here
+  return mutationWrapper<User>(api.recordAccountDetails.bind(api));
 }
 
 export function useLoginUserQuery() {
-  return mutationWrapper<AuthDetails>(api.signInWithEmailAndPassword); // why does this not work here
+  return mutationWrapper<AuthDetails>(api.signInWithEmailAndPassword);
+}
+
+export function useCreateTaskGroupQuery() {
+  return mutationWrapper<TaskGroup>(api.createTaskGroup.bind(api));
+}
+
+export function useGetTaskGroupOfUserQuery(userId: string) {
+  return useQuery(['taskGroups', userId], () => api.getTaskGroupsOfUser(userId));
 }
 
 export function useGetUserProfile(userId: string) {

@@ -12,7 +12,7 @@ export default function DashboardLayout() {
   return (
     <div className="flex">
       <TheSidebar />
-      <div className="w-full h-screen md:w-5/6">
+      <div className="w-full h-screen overflow-auto md:w-5/6">
         {isLoading ? <UiLoader /> : <Outlet />}
       </div>
     </div>

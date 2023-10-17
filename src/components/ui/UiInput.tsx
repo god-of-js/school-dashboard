@@ -9,6 +9,7 @@ interface Props {
   type?: InputType;
   value: string | null | number;
   placeholder?: string;
+  variant?: 'default' | 'light';
   /** The name property should always be the same as the model value. example if the input belongs to
    * formData.confirm_password, the name prop should be confirm_password.
    */
@@ -22,6 +23,7 @@ export default function UiInput({
   type = 'text',
   value,
   label,
+  variant,
   name,
   placeholder,
   disabled,
@@ -38,7 +40,9 @@ export default function UiInput({
         className={`outline-none rounded-md w-full border placeholder:text-sm  h-12 pl-4 ${
           !!error
             ? 'bg-danger-100 placeholder:text-danger border-danger'
-            : 'bg-gray-25 border-transparent'
+            : `${
+                variant === 'light' ? 'bg-white' : 'bg-gray-25'
+              } border-transparent`
         }`}
         data-testid="ui-input"
         placeholder={placeholder}
