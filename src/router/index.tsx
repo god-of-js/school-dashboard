@@ -26,7 +26,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <DashboardPage />,
+        element: <ProtectedRoute reRouteUrl='/tasks' allowNavigation={false}><DashboardPage /></ProtectedRoute>,
       },
       {
         path: '/tasks',

@@ -1,27 +1,27 @@
-# React + TypeScript + Vite
+# Demo React Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project builds on the foundations of enterprise frontend architecture and was built to showcase and tutor other engineers on how enterprise applications could
+be built and also provide an enterprise project to be used as boilerplate and reference when needed.
 
-Currently, two official plugins are available:
+## Tech stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project was built with React + Vite + Typescript + Firebase + Tailwind.
 
-## Expanding the ESLint configuration
+## Live URL
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+You can find the hosted version of this application here: (Link)[https://school-dashboard-9k336unyi-hernysleek51.vercel.app/auth/login]
 
-- Configure the top-level `parserOptions` property like this:
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+## Features
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+This applications provides a way for students to prioritize their schedules through a TO DO list interface and also plan ahead.
+
+### Upcoming application features
+
+- Scheduling
+- Detail dashboard
+- Course registration.
+
+### Upcoming code features
+
+- Error pages for 400, 404, etc.

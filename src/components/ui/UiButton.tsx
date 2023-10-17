@@ -2,7 +2,7 @@ import UiLoader from './UiLoader';
 
 interface Props {
   children: React.ReactNode;
-  variant?: 'primary' | 'neutral';
+  variant?: 'primary' | 'neutral' | 'transparent';
   block?: boolean;
   disabled?: boolean;
   loading?: boolean;
@@ -22,8 +22,9 @@ export default function UiButton({
 }: Props) {
   const variantClasses = {
     primary: 'bg-primary text-white ',
-    neutral: 'bg-gray-10 hover:bg-gray-25 text-gray-900',
-    tertiary: 'gray-50 hover:bg-gray-25 text-gray-900',
+    neutral: 'bg-gray-10 hover:bg-gray-50 text-gray-900',
+    transparent: 'bg-transparent hover:bg-gray-10 text-gray-900',
+
   };
   return (
     <button

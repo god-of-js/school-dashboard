@@ -36,22 +36,25 @@ export default function TasksPage() {
   );
 
   const tasks = useMemo<Task[]>(() => {
-    const unfilteredTasks = [...localTasks, ...(remoteTasks?.length ? remoteTasks : [])]
+    const unfilteredTasks = [
+      ...localTasks,
+      ...(remoteTasks?.length ? remoteTasks : []),
+    ];
 
     if (searchQuery) return searchTasks(unfilteredTasks);
 
     return unfilteredTasks;
   }, [localTasks, remoteTasks, searchQuery]);
 
-  function searchTasks(unfilteredTasks: Task[]): Task[]  {
+  function searchTasks(unfilteredTasks: Task[]): Task[] {
     if (!searchQuery) {
-      return unfilteredTasks; 
+      return unfilteredTasks;
     }
-  
+
     return unfilteredTasks.filter((task) =>
-      task.name.toLowerCase().includes(searchQuery.toLowerCase())
+      task.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
-  };
+  }
 
   function filterTasksByGroupId(groupId: string) {
     return tasks.filter(({ taskGroupId }) => taskGroupId === groupId);
@@ -102,8 +105,12 @@ export default function TasksPage() {
     <div className="overflow-hidden">
       <TheTopNav>
         <div className="w-60">
-
-        <UiInput value={searchQuery} name="searchQuery" placeholder='Search for tasks' onChange={({ value }) => setSearchQuery(value!)} />
+          <UiInput
+            value={searchQuery}
+            name="searchQuery"
+            placeholder="Search for tasks"
+            onChange={({ value }) => setSearchQuery(value!)}
+          />
         </div>
       </TheTopNav>
       <div className="p-4 flex gap-4 overflow-auto">
