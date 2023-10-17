@@ -21,7 +21,9 @@ export function useCreateTaskGroupQuery() {
 }
 
 export function useGetTaskGroupOfUserQuery(userId: string) {
-  return useQuery(['taskGroups', userId], () => api.getTaskGroupsOfUser(userId));
+  return useQuery(['taskGroups', userId], () =>
+    api.getTaskGroupsOfUser(userId),
+  );
 }
 
 export function useGetUserProfile(userId: string) {

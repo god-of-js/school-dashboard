@@ -5,7 +5,12 @@ import Tasks from '../../components/tasks/Tasks';
 import UiButton from '../../components/ui/UiButton';
 import TaskGroup from '../../types/TaskGroup';
 import { uuidv4 } from '@firebase/util';
-import { useCreateTaskGroupQuery, useGetTaskGroupOfUserQuery } from '../../api/queries';
+import {
+  useCreateTaskGroupQuery,
+  useGetTaskGroupOfUserQuery,
+} from '../../api/queries';
+import UiModal from '../../components/ui/UiModal';
+import CreateTask from '../../components/tasks/CreateTask';
 
 export default function TasksPage() {
   const uid = localStorage.getItem('uid')!;
@@ -13,9 +18,15 @@ export default function TasksPage() {
   const { data: remoteTaskGroups } = useGetTaskGroupOfUserQuery(uid);
   // TODO: fix issue with overflow
   const [localTaskGroups, setLocalTaskGroups] = useState<TaskGroup[]>([]);
+  const [createTaskIsVisible, setCreateTaskIsVisible] = useState(true);
 
-  const taskGroups = useMemo<TaskGroup[]>(() => [...(remoteTaskGroups?.length ? remoteTaskGroups : []), ...localTaskGroups]
-  , [localTaskGroups, remoteTaskGroups])
+  const taskGroups = useMemo<TaskGroup[]>(
+    () => [
+      ...(remoteTaskGroups?.length ? remoteTaskGroups : []),
+      ...localTaskGroups,
+    ],
+    [localTaskGroups, remoteTaskGroups],
+  );
 
   function addTaskGroup() {
     const newTaskGroup: TaskGroup = {
@@ -28,7 +39,9 @@ export default function TasksPage() {
   }
 
   function removeUnsavedTaskGroup(id: string) {
-    setLocalTaskGroups((curr) => curr.filter((taskGroup) => taskGroup._id !== id));
+    setLocalTaskGroups((curr) =>
+      curr.filter((taskGroup) => taskGroup._id !== id),
+    );
   }
   function saveTaskGroup(newTaskGroup: TaskGroup) {
     request(newTaskGroup).then(() => {
@@ -42,6 +55,10 @@ export default function TasksPage() {
     });
   }
 
+  function createTask() {}
+
+  function closeCreateTask() {}
+
   return (
     <div className="overflow-hidden">
       <TheTopNav />
@@ -49,15 +66,23 @@ export default function TasksPage() {
         {taskGroups.map((taskGroup, index) => (
           <Tasks
             key={index}
+            taskGroup={taskGroup}
+            createTask={createTask}
             removeUnsavedTaskGroup={removeUnsavedTaskGroup}
             saveTaskGroup={saveTaskGroup}
-            taskGroup={taskGroup}
           ></Tasks>
         ))}
-        <UiButton variant="icon" onClick={addTaskGroup}>
+        <UiButton variant="neutral" onClick={addTaskGroup}>
           <Plus size={24} />
         </UiButton>
       </div>
+      <UiModal
+        onClose={() => setCreateTaskIsVisible(false)}
+        isOpen={createTaskIsVisible}
+        title="Create Task"
+      >
+        <CreateTask />
+      </UiModal>
     </div>
   );
 }

@@ -2,10 +2,11 @@ import UiLoader from './UiLoader';
 
 interface Props {
   children: React.ReactNode;
-  variant?: 'primary' | 'icon';
+  variant?: 'primary' | 'neutral';
   block?: boolean;
   disabled?: boolean;
   loading?: boolean;
+  size?: 'lg' | 'sm';
   type?: 'button' | 'submit';
   onClick?: () => void;
 }
@@ -14,19 +15,23 @@ export default function UiButton({
   variant = 'primary',
   disabled,
   loading,
+  size = 'lg',
   type = 'submit',
   block,
   onClick,
 }: Props) {
   const variantClasses = {
     primary: 'bg-primary text-white ',
-    icon: 'bg-gray-10 hover:bg-gray-25 text-gray-900',
+    neutral: 'bg-gray-10 hover:bg-gray-25 text-gray-900',
+    tertiary: 'gray-50 hover:bg-gray-25 text-gray-900',
   };
   return (
     <button
-      className={`outline-none rounded-md h-12 px-4 flex gap-2 items-center justify-center  ${
-        block && 'w-full'
-      } ${variantClasses[variant]}`}
+      className={`outline-none rounded-md px-4 ${
+        size === 'lg' ? 'h-12 text-md' : 'h-8 text-sm'
+      } flex gap-2 items-center justify-center  ${block && 'w-full'} ${
+        variantClasses[variant]
+      }`}
       disabled={disabled}
       type={type}
       data-testid="ui-button"

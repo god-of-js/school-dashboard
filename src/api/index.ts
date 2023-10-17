@@ -43,10 +43,10 @@ class ApiService {
       collectionName: 'task-group',
       key: 'userId',
       condition: '==',
-      value: userId
-    })
+      value: userId,
+    });
   }
- 
+
   getUser(userId: string) {
     return this.getItem<User>('user', userId).then((user) => user);
   }

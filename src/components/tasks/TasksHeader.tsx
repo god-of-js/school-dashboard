@@ -41,16 +41,18 @@ export default function TasksHeader({
             }}
           />
           <div className="flex justify-end gap-2">
-            <UiButton variant="icon" onClick={initSaveTaskGroup}>
+            <UiButton variant="neutral" onClick={initSaveTaskGroup}>
               <Check size={16} />
             </UiButton>
-            <UiButton variant="icon" onClick={stopOperation}>
+            <UiButton variant="neutral" onClick={stopOperation}>
               <X size={16} />
             </UiButton>
           </div>
         </div>
       ) : (
-        <span>{taskGroupDetails.name}</span>
+        <span className="uppercase text-sm text-gray-700">
+          {taskGroupDetails.name}
+        </span>
       )}
     </div>
   );
