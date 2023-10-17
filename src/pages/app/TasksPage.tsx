@@ -8,17 +8,22 @@ import { uuidv4 } from '@firebase/util';
 import {
   useCreateTaskGroupQuery,
   useGetTaskGroupOfUserQuery,
+  useGetTasksOfUserQuery,
 } from '../../api/queries';
 import UiModal from '../../components/ui/UiModal';
 import CreateTask from '../../components/tasks/CreateTask';
+import Task from '../../types/Task';
 
 export default function TasksPage() {
+  // TODO: fix issue with overflow
   const uid = localStorage.getItem('uid')!;
   const { request } = useCreateTaskGroupQuery();
   const { data: remoteTaskGroups } = useGetTaskGroupOfUserQuery(uid);
-  // TODO: fix issue with overflow
   const [localTaskGroups, setLocalTaskGroups] = useState<TaskGroup[]>([]);
-  const [createTaskIsVisible, setCreateTaskIsVisible] = useState(true);
+  const [localTasks, setLocalTasks] = useState<Task[]>([]);
+  const { data: remoteTasks } = useGetTasksOfUserQuery(uid);
+  const [createTaskIsVisible, setCreateTaskIsVisible] = useState(false);
+  const [activeTaskGroupId, setActiveTaskGroupId] = useState('');
 
   const taskGroups = useMemo<TaskGroup[]>(
     () => [
@@ -28,6 +33,13 @@ export default function TasksPage() {
     [localTaskGroups, remoteTaskGroups],
   );
 
+  const tasks = useMemo<Task[]>(() => {
+    return [...localTasks, ...(remoteTasks?.length ? remoteTasks : [])];
+  }, [localTasks, remoteTasks]);
+
+  function filterTasksByGroupId(groupId: string) {
+    return tasks.filter(({ taskGroupId }) => taskGroupId === groupId);
+  }
   function addTaskGroup() {
     const newTaskGroup: TaskGroup = {
       name: '',
@@ -43,6 +55,7 @@ export default function TasksPage() {
       curr.filter((taskGroup) => taskGroup._id !== id),
     );
   }
+
   function saveTaskGroup(newTaskGroup: TaskGroup) {
     request(newTaskGroup).then(() => {
       setLocalTaskGroups((curr) =>
@@ -55,9 +68,19 @@ export default function TasksPage() {
     });
   }
 
-  function createTask() {}
+  function initCreateTask(taskGroupId: string) {
+    setActiveTaskGroupId(taskGroupId);
+    setCreateTaskIsVisible(true);
+  }
 
-  function closeCreateTask() {}
+  function closeCreateTask() {
+    setCreateTaskIsVisible(false);
+  }
+
+  function setNewTaskAndCloseCreateTask(newlyAddedTask: Task) {
+    setLocalTasks((curr) => [...curr, newlyAddedTask]);
+    closeCreateTask();
+  }
 
   return (
     <div className="overflow-hidden">
@@ -66,22 +89,26 @@ export default function TasksPage() {
         {taskGroups.map((taskGroup, index) => (
           <Tasks
             key={index}
+            tasks={filterTasksByGroupId(taskGroup._id)}
             taskGroup={taskGroup}
-            createTask={createTask}
+            createTask={initCreateTask}
             removeUnsavedTaskGroup={removeUnsavedTaskGroup}
             saveTaskGroup={saveTaskGroup}
-          ></Tasks>
+          />
         ))}
         <UiButton variant="neutral" onClick={addTaskGroup}>
           <Plus size={24} />
         </UiButton>
       </div>
       <UiModal
-        onClose={() => setCreateTaskIsVisible(false)}
+        onClose={closeCreateTask}
         isOpen={createTaskIsVisible}
         title="Create Task"
       >
-        <CreateTask />
+        <CreateTask
+          taskGroupId={activeTaskGroupId}
+          finishCreatingTask={setNewTaskAndCloseCreateTask}
+        />
       </UiModal>
     </div>
   );

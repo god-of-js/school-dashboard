@@ -1,14 +1,32 @@
+import { uuidv4 } from '@firebase/util';
 import { useState } from 'react';
+import { useCreateTaskQuery } from '../../api/queries';
 import OnChangeParams from '../../types/OnChangeParams';
+import Task from '../../types/Task';
+import CreateTaskSchema from '../../utils/schemas/CreateTaskSchema';
 import UiButton from '../ui/UiButton';
 import UiForm from '../ui/UiForm';
 import UiInput from '../ui/UiInput';
 
-export default function CreateTask() {
-  const [formData, setFormData] = useState({
+interface Props {
+  taskGroupId: string;
+  finishCreatingTask: (newlyAddedTask: Task) => void;
+}
+export default function CreateTask({ taskGroupId, finishCreatingTask }: Props) {
+  const userId = localStorage.getItem('uid')!;
+  const { request, isLoading } = useCreateTaskQuery();
+  const [formData, setFormData] = useState<Task>({
     name: '',
+    taskGroupId,
+    _id: '',
+    userId,
   });
-  function createTask() {}
+  function createTask() {
+    const data = { ...formData, _id: uuidv4() };
+    request(data).then(() => {
+      finishCreatingTask(data);
+    });
+  }
 
   function onChange({ name, value }: OnChangeParams) {
     setFormData((currentValue) => ({
@@ -16,8 +34,9 @@ export default function CreateTask() {
       [name]: value,
     }));
   }
+
   return (
-    <UiForm formData={formData} onSubmit={createTask}>
+    <UiForm formData={formData} schema={CreateTaskSchema} onSubmit={createTask}>
       {({ errors }) => (
         <div className="grid gap-4">
           <UiInput
@@ -28,7 +47,7 @@ export default function CreateTask() {
             onChange={onChange}
             error={errors.name}
           />
-          <UiButton>Create Task</UiButton>
+          <UiButton loading={isLoading}>Create Task</UiButton>
         </div>
       )}
     </UiForm>
