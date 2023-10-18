@@ -52,5 +52,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: '*',
+    // This route is the wildcard. Any route that does not exist would be redirected to this route.
+    element: <ProtectedRoute reRouteUrl='/tasks' allowNavigation={false} />
+  }
 ]);
 export default router;
