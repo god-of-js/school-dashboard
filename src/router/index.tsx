@@ -23,6 +23,7 @@ const router = createBrowserRouter([
         <DashboardLayout />
       </ProtectedRoute>
     ),
+    errorElement: <div>If an unhandled error occurs in a component or page, this is going to get triggered</div>,
     children: [
       {
         path: '/',
@@ -54,7 +55,7 @@ const router = createBrowserRouter([
   },
   {
     path: '*',
-    // This route is the wildcard. Any route that does not exist would be redirected to this route.
+    // This route is the wildcard. Any route that does not exist would be redirected to this route. replace it with the design for your 404 page.
     element: <ProtectedRoute reRouteUrl='/tasks' allowNavigation={false} />
   }
 ]);
