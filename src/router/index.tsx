@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import { ProtectedRoute } from './ProtectedRoute';
 import { userIsLoggedIn } from './navigationGuards';
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <ProtectedRoute reRouteUrl='/tasks' allowNavigation={false}><DashboardPage /></ProtectedRoute>,
+        element: <Navigate to="/tasks" replace />,
       },
       {
         path: '/tasks',
@@ -56,8 +56,8 @@ const router = createBrowserRouter([
   },
   {
     path: '*',
-    // This route is the wildcard. Any route that does not exist would be redirected to this route. replace it with the design for your 404 page.
-    element: <ProtectedRoute reRouteUrl='/tasks' allowNavigation={false} />
+    // This route is the wildcard. Any route that does not exist would be redirected to this route. replace it with your 404 page.
+    element: <Navigate to="/tasks" replace />,
   }
 ]);
 export default router;
