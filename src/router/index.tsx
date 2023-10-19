@@ -11,6 +11,7 @@ const DashboardPage = lazy(() => import('../pages/app/DashboardPage'));
 const TasksPage = lazy(() => import('../pages/app/TasksPage'));
 const RegistrationPage = lazy(() => import('../pages/auth/RegistrationPage'));
 const LoginPage = lazy(() => import('../pages/auth/LoginPage'));
+const PageError = lazy(() => import('../components/errors/PageError'));
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
         <DashboardLayout />
       </ProtectedRoute>
     ),
-    errorElement: <div>If an unhandled error occurs in a component or page, this is going to get triggered</div>,
+    errorElement: <PageError />,
     children: [
       {
         path: '/',
