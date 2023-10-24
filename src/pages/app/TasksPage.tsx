@@ -17,7 +17,7 @@ import UiInput from '../../components/ui/UiInput';
 
 export default function TasksPage() {
   // TODO: fix issue with overflow
-  const uid = localStorage.getItem('uid')!;
+  const uid = localStorage.getItem('uid') || 'F1xLKP4EBAMmhuEiuu4gvntSkOi1';
   const { request } = useCreateTaskGroupQuery();
   const { data: remoteTaskGroups } = useGetTaskGroupOfUserQuery(uid);
   const [localTaskGroups, setLocalTaskGroups] = useState<TaskGroup[]>([]);
@@ -124,7 +124,7 @@ export default function TasksPage() {
             saveTaskGroup={saveTaskGroup}
           />
         ))}
-        <UiButton variant="neutral" onClick={addTaskGroup}>
+        <UiButton variant="neutral" disabled={taskGroups.length >= 3} onClick={addTaskGroup}>
           <Plus size={24} />
         </UiButton>
       </div>

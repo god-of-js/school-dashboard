@@ -16,14 +16,16 @@ const PageError = lazy(() => import('../components/errors/PageError'));
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <ProtectedRoute
-        reRouteUrl="/auth/login"
-        allowNavigation={userIsLoggedIn()}
-      >
-        <DashboardLayout />
-      </ProtectedRoute>
-    ),
+    element: <DashboardLayout />,
+    // Ignore the comment
+    // element: (
+    //   <ProtectedRoute
+    //     reRouteUrl="/auth/login"
+    //     allowNavigation={userIsLoggedIn()}
+    //   >
+    //     <DashboardLayout />
+    //   </ProtectedRoute>
+    // ),
     errorElement: <PageError />,
     children: [
       {

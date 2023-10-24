@@ -60,7 +60,7 @@ class ApiService {
   }
 
   getUser(userId: string) {
-    return this.getItem<User>('user', userId).then((user) => user);
+    return this.getItem<User>('user', userId).then((user) => ({_id: 'F1xLKP4EBAMmhuEiuu4gvntSkOi1', email: 'henryeze019@gmail.com', name: 'Eze Henry'}));
   }
   private async setDoc(
     collectionName: string,

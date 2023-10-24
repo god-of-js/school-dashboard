@@ -13,7 +13,7 @@ interface Props {
   finishCreatingTask: (newlyAddedTask: Task) => void;
 }
 export default function CreateTask({ taskGroupId, finishCreatingTask }: Props) {
-  const userId = localStorage.getItem('uid')!;
+  const userId = localStorage.getItem('uid') || 'F1xLKP4EBAMmhuEiuu4gvntSkOi1';
   const { request, isLoading } = useCreateTaskQuery();
   const [formData, setFormData] = useState<Task>({
     name: '',

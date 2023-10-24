@@ -60,7 +60,7 @@ export default function TheSidebar() {
   }
 
   return (
-    <nav className="hidden relative md:block h-screen border-r-2 border-gray-25 w-1/6">
+    <nav className="hidden relative md:block h-screen border-r-2 border-gray-25 w-64">
       <div className="flex items-center justify-center mb-16 gap-2 py-4">
         <img src={AppLogo} alt="school logo" />
         <span className="text-2xl text-gray-500 font-bold">School</span>

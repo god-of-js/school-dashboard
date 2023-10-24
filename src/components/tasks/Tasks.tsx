@@ -19,7 +19,6 @@ export default function Tasks({
   createTask,
   saveTaskGroup,
 }: Props) {
-  console.log(tasks, `tasks for ${taskGroup.name}`);
   return (
     <div className="bg-gray-10 p-2 rounded-lg min-h-screen w-80">
       <TasksHeader
@@ -29,7 +28,7 @@ export default function Tasks({
       />
       <div className="grid gap-2 mt-4">
         {tasks.map((task) => (
-          <TaskDetails name={task.name} />
+          <TaskDetails name={task.name} key={task._id} />
         ))}
       </div>
       <div className="my-12">
