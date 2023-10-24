@@ -5,7 +5,7 @@ import UiLoader from '../components/ui/UiLoader';
 
 export default function DashboardLayout() {
   const uid = localStorage.getItem('uid') || 'F1xLKP4EBAMmhuEiuu4gvntSkOi1';
-  const { isLoading, data } = useGetUserProfile(uid);
+  const { isLoading } = useGetUserProfile(uid);
 
   return (
     <div className="flex">
