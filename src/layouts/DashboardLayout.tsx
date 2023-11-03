@@ -4,7 +4,7 @@ import TheSidebar from '../components/layout/TheSidebar';
 import UiLoader from '../components/ui/UiLoader';
 
 export default function DashboardLayout() {
-  const uid = localStorage.getItem('uid') || 'F1xLKP4EBAMmhuEiuu4gvntSkOi1';
+  const uid = localStorage.getItem('uid')!;
   const { isLoading } = useGetUserProfile(uid);
 
   return (
